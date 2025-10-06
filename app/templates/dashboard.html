@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="max-w-6xl mx-auto">
+  <h1 class="text-3xl font-bold mb-6 text-gray-800">Dashboard</h1>
+
+  {% if user %}
+    <p class="text-gray-600 mb-6">
+      Welcome back, <span class="font-semibold text-red-600">{{ user.email }}</span>!
+    </p>
+  {% endif %}
+
+  {% if calculations and calculations|length > 0 %}
+  <form method="POST" action="{{ url_for('dashboard.download_multiple') }}">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-semibold text-gray-800">Your Saved Calculations</h2>
+      <button type="submit"
+        class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
+        Download Selected as PDF
+      </button>
+    </div>
+
+    <div class="overflow-x-auto bg-white rounded-lg shadow border">
+      <table class="min-w-full text-sm">
+        <thead class="bg-red-600 text-white uppercase text-xs">
+          <tr>
+            <th class="py-2 px-4 text-left">
+              <input type="checkbox" id="select-all" class="accent-red-500">
+            </th>
+            <th class="py-2 px-4 text-left">Date</th>
+            <th class="py-2 px-4 text-left">Latitude</th>
+            <th class="py-2 px-4 text-left">Longitude</th>
+            <th class="py-2 px-4 text-left">Tilt Angle</th>
+            <th class="py-2 px-4 text-left">Panel Azimuth</th>
+            <th class="py-2 px-4 text-left">Irradiance (W/m²)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for calc in calculations %}
+          <tr class="border-t hover:bg-gray-50 transition cursor-pointer row-select">
+            <td class="py-2 px-4">
+              <input type="checkbox" 
+                     name="selected_ids" 
+                     value="{{ calc.id }}" 
+                     class="accent-red-500 row-checkbox">
+            </td>
+            <td class="py-2 px-4">
+              {% if calc.date_created %}
+                {{ calc.date_created.strftime('%Y-%m-%d %H:%M') }}
+              {% else %}
+                N/A
+              {% endif %}
+            </td>
+            <td class="py-2 px-4">{{ calc.latitude }}</td>
+            <td class="py-2 px-4">{{ calc.longitude }}</td>
+            <td class="py-2 px-4">{{ calc.tilt_angle }}</td>
+            <td class="py-2 px-4">{{ calc.panel_azimuth }}</td>
+            <td class="py-2 px-4 font-semibold text-green-700">
+              {{ "%.2f"|format(calc.total_irradiance) }}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </form>
+
+  {% else %}
+    <p class="text-gray-600 mt-6">No previous results found.</p>
+  {% endif %}
+</div>
+
+<script>
+  //  All checkbox
+  document.getElementById("select-all")?.addEventListener("change", function () {
+    const checkboxes = document.querySelectorAll(".row-checkbox");
+    checkboxes.forEach(cb => cb.checked = this.checked);
+  });
+
+  // row clcikable 
+  document.querySelectorAll(".row-select").forEach(row => {
+    row.addEventListener("click", function (e) {
+
+      // Ignore checkbox click
+      if (e.target.type === "checkbox") return;
+
+      const checkbox = this.querySelector(".row-checkbox");
+      checkbox.checked = !checkbox.checked;
+
+      //  highlight selcted row
+      if (checkbox.checked) {
+        this.classList.add("bg-red-50");
+      } else {
+        this.classList.remove("bg-red-50");
+      }
+    });
+  });
+</script>
+
+{% endblock %}
