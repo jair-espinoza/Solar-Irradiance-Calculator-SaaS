@@ -1,30 +1,72 @@
-# Solar Irradiance Calculator - SaaS
+# Solar Panel Irradiance Forecast Fullstack 
 
-This is a **full-stack flask (SaaS)** web application that calculates and visualizes the **solar irradiance** geenrated by computing the **solar altitude**, **azimuth**, **zenith**, angles using the input parameters. 
+Solar irradiance (W/m²) is computed using a position-sensitive solar physics formula that accounts for the relative angle between the sun and the panel surface. This full-stack web application allows users to calculate solar irradiance and estimated energy output, in order to helps optimize the panel tilt angle and direction for maximum efficiency. 
 
---- 
-## Solar Irradiance is essential for
-- Solar panel placement (SPP) optimization
-- Energy forcasting
+Built with **Node.js, Express, MongoDB, and React (Vite)**, the backend (server directory) includes the calculation logic and API endpoints, all developed from the ground up to provide for flexible service.
 
---- 
-
+---
 ## Features
-Users can login in using a SQLite database, aand view previous results all onto a dashboard. From there, users can select and download multiple past results as a PDF Solar Irradiance Calculator report. 
+- Solar irradiance and energy output calculation
+- User authentication with JWT
+- Secure password hashing
+- Save and manage calculation history for comparison
+- Custom RESTful API
+- Responsive React frontend
+
+---
+## Tech Stack
+
+### Backend
+- Node.js
+- Express 5
+- MongoDB & Mongoose
+- JWT Authentication
+- bcrypt
+- dotenv
+
+### Frontend
+- React 19
+- React Router
+- Vite
+- TypeScript
+- ESLint
+
+---
+## Installation & Setup
+### Clone the repository
+```bash
+git clone https://github.com/jair-espinoza/Solar-Irradiance-Calculator-SaaS.git
+cd spp_fullstack
+```
+
+### create a .env file
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+CLIENT_URL=your_client_url
 
 ---
 
-## Tech Stack
--- **Flask**
--- **SQLite**
--- **TailwindCSS**
--- **ReportLab**
--- **Docker**
+## Backend Setup
+cd server
+npm install
+npm run dev
 
---- 
+---
+## Frontend Setup
+cd client
+npm install
+npm run dev
 
-## Installation & Setup
-If you perfer build and run the docker image or choose to run the app locally
-
-'''git clone https://github.com/jair-espinoza/Solar-Irradiance-Calculator-SaaS.git
-cd Solar-Irradiance-Calculator-SaaS
+---
+## API Overview
+-----------------------------------------------------------------------
+| Method | Endpoint              | Description                       |
+|--------|----------------------|------------------------------------|
+| POST   | /auth/register        | Register a new user               |
+| POST   | /auth/login           | Login user and set JWT cookie     |
+| POST   | /solar/calculate      | Calculate solar irradiance        |
+| POST   | /solar                | Save calculation record           |
+| GET    | /solar                | Retrieve saved calculations       |
+| GET    | /solar/:id            | Retrieve a single calculation     |
+------------------------------------------------------------------------

@@ -1,0 +1,39 @@
+.dashboard-page{
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 80px;
+  background: url("../assets/l:r.png");
+  background-size: cover;          
+  background-position: center;   
+}
+
+.pagination-controls {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 1rem;
+}
+
+.pagination-info {
+  font-weight: 600;
+  padding: .5rem;
+}
+
+.pagination-btn {
+  padding: 0.5rem 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+
+  background: rgba(255, 255, 255, 0.376);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  color: rgb(0, 0, 0);
+  font-weight: 500;
+  letter-spacing: 0.4px;
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.15);
+  color: rgb(229, 225, 225);;
+}
+
